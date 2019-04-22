@@ -33,6 +33,17 @@ module ActiveModel
     end
   end
   # rewrite the inclusion validator to get the options with the in/within values
+  # the original code is : https://github.com/rails/rails/blob/master/activemodel/lib/active_model/validations/inclusion.rb
+  #       class InclusionValidator < EachValidator # :nodoc:
+  #       include Clusivity
+
+  #       def validate_each(record, attribute, value)
+  #         unless include?(record, value)
+  #           record.errors.add(attribute, :inclusion, options.except(:in, :within).merge!(value: value))
+  #         end
+  #       end
+  #     end
+
   module Validations
     class InclusionValidator < EachValidator 
       def validate_each(record, attribute, value)
