@@ -31,8 +31,8 @@ This plugin was originally written by Junwen Yang(x1022069@gmail.com)
 Integrate and develop with your own apps
 -------
 
-download the repo to your local folder say `path/better_error_msg` which is under the parallel folder of your app
+download the repo to your local folder say `path/better_error_msg_gem` which is under the parallel folder of your app
 
-add `gem "better_error_message", :path => "../better_error_msg/"` to your Gemfile of your app
+add `gem "better_error_message_gem", :path => "../better_error_msg_gem/"` to your Gemfile of your app
 
 run `./compile.sh`, then the gem can be used in your own app
