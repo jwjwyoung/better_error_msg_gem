@@ -14,21 +14,16 @@ Usage
 
 Sometimes generated error messages don't make sense.
 
-    validates_acceptance_of :accepted_terms, :message => 'Please accept the terms of service'
-
-This generates the error message:
-
-    Accepted terms Please accept the terms of service
+    validates_inclusion_of :domain, :in => {'.com', 'cn'}
     
-This plugin uses the carat (^) to omit the name of the attribute from error messages:
+input is not included in the list,
 
-    validates_acceptance_of :accepted_terms, :message => '^Please accept the terms of service'
-    
-This now generates:
+should be 
 
-    Please accept the terms of service
+inputs is not included in the list, you should choose from [.com, .cn]
+
 
 CREDITS
 -------
 
-This plugin was originally written by David Easley (easleydp@gmail.com)
+This plugin was originally written by Junwen Yang(x1022069@gmail.com)
