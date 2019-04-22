@@ -22,4 +22,5 @@ protected
       I18n.translate(keys.shift, options)
     end
   end
+  
 end
