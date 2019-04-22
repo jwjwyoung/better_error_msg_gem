@@ -1,3 +1,3 @@
 ruby rewritegemspec.rb
 rm *.gem
-gem build custom_error_message.gemspec
+gem build better_error_message.gemspec

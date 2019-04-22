@@ -1,6 +1,6 @@
 tmp = open("tmp", "w")
 r = "r"
-gemspec = open("custom_error_message.gemspec", r)
+gemspec = open("better_error_message.gemspec", r)
 gemspec.read.lines.each do |line|
   if line.include?("s.version")
      if line.include?("1.1.2")
@@ -12,5 +12,5 @@ gemspec.read.lines.each do |line|
   tmp.write(line)
 end
 tmp.close
-`cp tmp custom_error_message.gemspec`
+`cp tmp better_error_message.gemspec`
 `rm tmp`

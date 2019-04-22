@@ -1,1 +1,1 @@
-require 'custom_error_message'
+require 'better_error_message'

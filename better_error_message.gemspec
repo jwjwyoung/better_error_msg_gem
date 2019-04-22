@@ -3,7 +3,6 @@
 Gem::Specification.new do |s|
   s.name = 'better_error_message'
   s.version = "1.1.2"
-  
   s.platform = Gem::Platform::RUBY
   s.authors = ["Junwen", "Christian"]
   s.email = %q{x1022069@gmail.com}
