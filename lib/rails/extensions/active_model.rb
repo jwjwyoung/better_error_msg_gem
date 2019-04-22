@@ -32,7 +32,7 @@ module ActiveModel
       full_messages
     end
   end
-    
+  # rewrite the inclusion validator to get the options with the in/within values
   module Validations
     class InclusionValidator < EachValidator 
       def validate_each(record, attribute, value)
