@@ -22,10 +22,10 @@ module ActiveModel
                 in_list = detail[:in] ||  detail[:within]
                 m += " you should choose from [#{in_list.join(',')}]" 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
-            # elsif detail[:error] == :exclusion
-            #     out_list = detial[:in] || detail[:within]
-            #     m += " you should not choose from [#{in_list.join(',')}]" 
-            #     full_messages << I18n.t(:"errors.format", options.merge(:message => m))
+            elsif detail[:error] == :exclusion
+                out_list = detail[:in] || detail[:within]
+                m += " you should not choose from [#{out_list.join(',')}]" 
+                full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             else        
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             end
@@ -57,12 +57,12 @@ module ActiveModel
       end
     end
   
-    # class ExclusionValidator < EachValidator # :nodoc:
-    #     def validate_each(record, attribute, value)
-    #       if include?(record, value)
-    #         record.errors.add(attribute, :exclusion, options.merge(value: value))
-    #       end
-    #     end
-    # end
+    class ExclusionValidator < EachValidator # :nodoc:
+        def validate_each(record, attribute, value)
+          if include?(record, value)
+            record.errors.add(attribute, :exclusion, options.merge(value: value))
+          end
+        end
+    end
   end
 end
