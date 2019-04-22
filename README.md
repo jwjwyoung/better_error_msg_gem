@@ -17,13 +17,17 @@ run `./compile.sh`, then the gem can be used in your own app
 TODO
 -------
 validates_associate
+
 validate confirmation
+
 validate uniqueness
+
 validate format
 
 Finished
 --------
 validates_inclusion_of
+
 validates_exclusion_of
 
 
