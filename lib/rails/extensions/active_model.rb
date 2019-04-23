@@ -20,17 +20,21 @@ module ActiveModel
           messages.each do |m|
             if detail[:error] == :inclusion
                 in_list = detail[:in] ||  detail[:within]
-                m += " you should choose from [#{in_list.join(',')}]" 
+                m += " you should choose from [#{in_list.join(', ')}]" 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             elsif detail[:error] == :exclusion
                 out_list = detail[:in] || detail[:within]
-                m += " you should not choose from [#{out_list.join(',')}]" 
+                m += " you should not choose from [#{out_list.join(', ')}]" 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             elsif detail[:error] == :confirmation
-                field_name = detail[:in] || detail[:within]
-                puts field_name
-                msg = '#{attr_name} fields must match.'
-                puts msg
+                case_sensitive = detail[:case_sensitive]
+                if case_sensitive == true
+                  is_string = "is"
+                else
+                  is_string = "isn't"
+                end
+                original_field = attr_name.split(" ")[0]
+                msg = ", #{original_field} #{is_string} case sensitive"
                 m += msg
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             else        
@@ -88,7 +92,7 @@ module ActiveModel
             unless (confirmed = record.send("#{attribute}_confirmation")).nil?
               unless confirmation_value_equal?(record, attribute, value, confirmed)
                 human_attribute_name = record.class.human_attribute_name(attribute)
-                record.errors.add(:"#{attribute}_confirmation", :confirmation, options.except(:case_sensitive).merge!(attribute: human_attribute_name))
+                record.errors.add(:"#{attribute}_confirmation", :confirmation, options.merge(attribute: human_attribute_name))
               end
             end
           end
