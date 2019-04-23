@@ -56,7 +56,16 @@ module ActiveModel
         end
       end
     end
-  
+    # the original file is: https://github.com/rails/rails/blob/master/activemodel/lib/active_model/validations/exclusion.rb
+    # class ExclusionValidator < EachValidator # :nodoc:
+    #   include Clusivity
+
+    #   def validate_each(record, attribute, value)
+    #     if include?(record, value)
+    #       record.errors.add(attribute, :exclusion, options.except(:in, :within).merge!(value: value))
+    #     end
+    #   end
+    # end    
     class ExclusionValidator < EachValidator # :nodoc:
         def validate_each(record, attribute, value)
           if include?(record, value)
