@@ -26,6 +26,13 @@ module ActiveModel
                 out_list = detail[:in] || detail[:within]
                 m += " you should not choose from [#{out_list.join(',')}]" 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
+            elsif detail[:error] == :confirmation
+                field_name = detail[:in] || detail[:within]
+                puts field_name
+                msg = '#{attr_name} fields must match.'
+                puts msg
+                m += msg
+                full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             else        
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             end
@@ -72,6 +79,19 @@ module ActiveModel
             record.errors.add(attribute, :exclusion, options.merge(value: value))
           end
         end
+    end
+
+    # original file is: https://github.com/rails/rails/blob/master/activemodel/lib/active_model/validations/confirmation.rb
+    # rewrite ConfirmationValidator to 
+    class ConfirmationValidator < EachValidator
+        def validate_each(record, attribute, value)
+            unless (confirmed = record.send("#{attribute}_confirmation")).nil?
+              unless confirmation_value_equal?(record, attribute, value, confirmed)
+                human_attribute_name = record.class.human_attribute_name(attribute)
+                record.errors.add(:"#{attribute}_confirmation", :confirmation, options.except(:case_sensitive).merge!(attribute: human_attribute_name))
+              end
+            end
+          end
     end
   end
 end
