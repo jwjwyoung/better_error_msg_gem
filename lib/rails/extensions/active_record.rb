@@ -18,7 +18,6 @@ module ActiveRecord
       
         if relation.exists?
           error_options = options.except(:scope, :conditions)
-          error_options[:case_sensitive] = true
           error_options[:value] = value
           record.errors.add(attribute, :taken, error_options)
         end
@@ -33,8 +32,9 @@ module ActiveRecord
         :'full_messages.format'
       ]
       keys.push('%{attribute} %{message}')
-      options.merge!(:default => keys, :message => self.message)        
-      I18n.translate(keys.shift, options)
+      options.merge!(:default => keys, :message => self.message)
+      msg = I18n.translate(keys.shift, options)
+      msg
     end
   end
   

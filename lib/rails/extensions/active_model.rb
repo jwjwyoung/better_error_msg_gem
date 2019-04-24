@@ -39,7 +39,7 @@ module ActiveModel
                   msg = ", #{original_field} #{is_string} case sensitive"
                 end
                 m += msg
-                full_messages << detail.to_s
+                #full_messages << detail.to_s
                 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             else        
