@@ -16,7 +16,7 @@ module ActiveModel
           attr_name = attribute.to_s.gsub('.', '_').humanize
           attr_name = @base.class.human_attribute_name(attribute, :default => attr_name)
           options = { :default => "%{attribute} %{message}", :attribute => attr_name }
-          
+          #full_messages << detail[:error]
           messages.each do |m|
             if detail[:error] == :inclusion
                 in_list = detail[:in] ||  detail[:within]
@@ -26,16 +26,21 @@ module ActiveModel
                 out_list = detail[:in] || detail[:within]
                 m += " you should not choose from [#{out_list.join(', ')}]" 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
-            elsif detail[:error] == :confirmation
+            elsif detail[:error] == :confirmation  || detail[:error] == :taken
                 case_sensitive = detail[:case_sensitive]
-                if case_sensitive == true
-                  is_string = "is"
-                else
-                  is_string = "isn't"
+                msg = ""
+                if case_sensitive != nil
+                  if case_sensitive == true
+                    is_string = "is"
+                  else
+                    is_string = "isn't"
+                  end
+                  original_field = attr_name.split(" ")[0]
+                  msg = ", #{original_field} #{is_string} case sensitive"
                 end
-                original_field = attr_name.split(" ")[0]
-                msg = ", #{original_field} #{is_string} case sensitive"
                 m += msg
+                full_messages << detail.to_s
+                
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             else        
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
