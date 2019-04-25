@@ -16,7 +16,7 @@ module ActiveModel
           attr_name = attribute.to_s.gsub('.', '_').humanize
           attr_name = @base.class.human_attribute_name(attribute, :default => attr_name)
           options = { :default => "%{attribute} %{message}", :attribute => attr_name }
-          #full_messages << detail[:error]
+          #full_messages << detail.to_s
           messages.each do |m|
             if detail[:error] == :inclusion
                 in_list = detail[:in] ||  detail[:within]
@@ -36,12 +36,18 @@ module ActiveModel
                     is_string = "isn't"
                   end
                   original_field = attr_name.split(" ")[0]
-                  msg = ", #{original_field} #{is_string} case sensitive"
+                  msg = "(#{original_field} #{is_string} case sensitive)"
                 end
                 m += msg
                 #full_messages << detail.to_s
                 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
+            elsif detail[:error] == :invalid
+              detail_errors = detail[:detail_errors]
+              if detail_errors
+                m += ", because #{detail_errors.join("; ")}"
+              end
+              full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             else        
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             end

@@ -23,6 +23,19 @@ module ActiveRecord
         end
       end
     end
+    class AssociatedValidator < ActiveModel::EachValidator #:nodoc:
+      def validate_each(record, attribute, value)
+        wrong_objects = Array(value).reject { |r| valid_object?(r) }
+        if wrong_objects.any?
+          errors = []
+          wrong_objects.each do |r|
+            errors << r.errors.full_messages
+          end
+          detail_errors = :detail_errors
+          record.errors.add(attribute, :invalid, options.merge(value: value, detail_errors: errors))
+        end
+      end
+    end
   end
   class Error
     protected
@@ -37,5 +50,6 @@ module ActiveRecord
       msg
     end
   end
+  
   
 end
