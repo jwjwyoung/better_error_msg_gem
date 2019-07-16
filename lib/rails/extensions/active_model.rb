@@ -20,11 +20,11 @@ module ActiveModel
           messages.each do |m|
             if detail[:error] == :inclusion
                 in_list = detail[:in] ||  detail[:within]
-                m += " you should choose from [#{in_list.join(', ')}]" 
+                m += " should be one of [#{in_list.join(', ')}]" 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             elsif detail[:error] == :exclusion
                 out_list = detail[:in] || detail[:within]
-                m += " you should not choose from [#{out_list.join(', ')}]" 
+                m += " cannot be one of [#{out_list.join(', ')}]" 
                 full_messages << I18n.t(:"errors.format", options.merge(:message => m))
             elsif detail[:error] == :confirmation  || detail[:error] == :taken
                 case_sensitive = detail[:case_sensitive]
